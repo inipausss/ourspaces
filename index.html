@@ -117,7 +117,6 @@ button.chip[aria-pressed="true"]{background:var(--ink);color:var(--yellow)}
 .b-red{background:var(--red);color:var(--white)}
 .b-cream{background:var(--paper);color:var(--ink)}
 .b-teal{background:var(--teal-dark);color:var(--white);background-image:radial-gradient(rgba(255,255,255,.14) 1.5px,transparent 1.5px);background-size:46px 46px}
-.b-dark{background:var(--dark);color:var(--cream);background-image:radial-gradient(ellipse at 90% 20%,rgba(215,56,31,.38),transparent 55%)}
 .band+.band::before{content:"";position:absolute;left:0;right:0;top:-1px;height:14px;background:repeating-linear-gradient(90deg,rgba(0,0,0,.14) 0 22px,transparent 22px 44px);pointer-events:none}
 
 /* about */
@@ -220,36 +219,6 @@ button.chip[aria-pressed="true"]{background:var(--ink);color:var(--yellow)}
 @keyframes zoomIn{from{transform:scale(.85);opacity:0}}
 
 /* contact */
-.contact{display:flex;flex-wrap:wrap;align-items:center;gap:44px 36px}
-.contact>*{min-width:0}
-.c-left{flex:1 1 min(300px,100%)}
-.eyebrow{display:block;color:var(--red);font-weight:800;font-size:12px;letter-spacing:4px;text-transform:uppercase;margin-bottom:12px}
-.c-left h2{margin:0 0 16px;font-family:var(--display);font-weight:400;font-size:clamp(40px,5vw,56px);line-height:1;color:var(--white)}
-.c-left p{margin:0 0 20px;font-size:16px;line-height:1.7;font-weight:600;color:#e9dfd0}
-.vibes{display:flex;flex-wrap:wrap;gap:10px}
-.vibe{min-height:44px;padding:0 20px;border-radius:999px;border:3px solid rgba(244,239,226,.5);background:transparent;color:var(--cream);font-weight:800;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s var(--ease)}
-.vibe:hover{transform:translateY(-3px);border-color:var(--yellow)}
-.vibe[aria-pressed="true"]{background:var(--red);border-color:var(--red);color:var(--white)}
-.beam{margin:16px 0 0!important;color:var(--yellow)!important;font-weight:700!important;font-size:13px!important;letter-spacing:1px}
-.c-mid{flex:0 1 300px;display:flex;flex-direction:column;align-items:center;gap:14px;margin:0 auto}
-.orbit{position:relative;width:260px;height:260px;margin:30px 0 34px;border-radius:50%;border:2px dashed rgba(244,239,226,.35);animation:none}
-.copy{position:absolute;left:50%;top:50%;width:122px;height:122px;margin:-61px 0 0 -61px;border-radius:50%;border:0;background:linear-gradient(135deg,var(--red),#F28A2B);color:var(--white);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;box-shadow:0 8px 0 rgba(0,0,0,.35);transition:transform .25s var(--ease)}
-.copy:hover{transform:scale(1.08)}
-.copy small{font-weight:800;font-size:10px;letter-spacing:2px;text-transform:uppercase}
-.copy b{font-family:var(--display);font-weight:400;font-size:20px}
-.o-ico{position:absolute;width:50px;height:50px;margin:-25px 0 0 -25px;border-radius:50%;background:var(--paper);color:var(--ink);border:3px solid var(--red);display:flex;align-items:center;justify-content:center;text-decoration:none;font-weight:800;font-size:14px;box-shadow:0 4px 0 rgba(0,0,0,.35);transition:transform .25s var(--ease)}
-.o-ico:hover{transform:scale(1.18) rotate(-6deg)}
-.o-top{left:50%;top:0}.o-bottom{left:50%;top:100%}.o-left{left:0;top:50%}.o-right{left:100%;top:50%}
-.mail-full{margin:0;font-weight:600;font-size:14px;color:#e9dfd0;overflow-wrap:anywhere;text-align:center}
-.c-form{flex:1 1 min(320px,100%);background:var(--paper);color:var(--ink);border-radius:24px;padding:26px;box-shadow:0 10px 0 rgba(0,0,0,.35)}
-.c-form label{display:block;font-weight:800;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin:14px 0 8px}
-.c-form label:first-child{margin-top:0}
-.c-form input,.c-form textarea{width:100%;border:3px solid #d9d2c0;border-radius:14px;padding:12px 14px;font:inherit;font-size:15px;font-weight:600;background:var(--white);color:var(--ink)}
-.c-form textarea{min-height:100px;resize:vertical}
-.c-form input:focus,.c-form textarea:focus{border-color:var(--red)}
-.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
-.actions .btn{min-height:46px;font-size:12px;padding:0 20px;flex:1 1 auto}
-.status{min-height:20px;margin:10px 0 0;font-weight:700;font-size:13px;color:var(--blue)}
 
 footer{background:var(--dark);color:var(--cream);border-top:1px solid rgba(244,239,226,.18)}
 footer .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 24px;padding-top:24px;padding-bottom:24px;font-weight:600;font-size:13px}
@@ -289,23 +258,6 @@ html[data-motion="off"] .js .rv,.js[data-motion="off"] .rv{opacity:1;transform:n
 html[data-motion="off"] .rotator span{transform:none}
 html[data-motion="off"] .rotator span:not(.on){display:none}
 
-/* contact + footer in the portfolio style: cutting mat, orange card, paper form */
-.b-mat{background-color:var(--teal);background-image:linear-gradient(rgba(255,255,255,.2) 2px,transparent 2px),linear-gradient(90deg,rgba(255,255,255,.2) 2px,transparent 2px),linear-gradient(rgba(255,255,255,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.09) 1px,transparent 1px);background-size:120px 120px,120px 120px,24px 24px,24px 24px;color:var(--ink)}
-.contact{background:linear-gradient(180deg,#FFBE55,#F28A2B);border-radius:28px;padding:48px 40px;box-shadow:0 10px 0 rgba(0,0,0,.22);align-items:flex-start}
-.collab{display:inline-block;background:var(--white);color:var(--blue);font-family:var(--display);font-size:clamp(34px,5vw,46px);line-height:1;padding:10px 26px 14px;border-radius:40px;transform:rotate(-2deg);box-shadow:0 5px 0 rgba(0,0,0,.18);margin-bottom:18px}
-.c-left p{color:var(--ink);font-size:18px}
-.vibe{border:3px solid var(--ink);background:var(--cream);color:var(--ink)}
-.vibe:hover{border-color:var(--ink);box-shadow:0 4px 0 rgba(0,0,0,.2)}
-.vibe[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--yellow)}
-.beam{color:var(--red-dark)!important}
-.orbit{border:2px dashed rgba(26,26,26,.45)}
-.copy{background:var(--red);box-shadow:0 8px 0 rgba(0,0,0,.25)}
-.o-ico{border-color:var(--ink);background:var(--cream);box-shadow:0 4px 0 rgba(0,0,0,.25)}
-.mail-full{color:var(--ink);font-weight:700}
-.c-form{position:relative;background-color:var(--paper);background-image:linear-gradient(rgba(60,100,120,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(60,100,120,.10) 1px,transparent 1px);background-size:28px 28px;border-radius:8px;box-shadow:0 8px 0 rgba(0,0,0,.2);transform:rotate(1deg)}
-.c-form input,.c-form textarea{border:3px solid var(--ink);border-radius:10px}
-.c-form label{color:var(--red-dark)}
-.status{color:var(--blue)}
 footer{background:var(--cream);color:var(--ink);border-top:3px solid var(--ink)}
 .btn-cream{background:var(--cream);color:var(--ink);border-color:var(--ink);min-height:44px;padding:0 22px}
 .btn-cream:hover{background:var(--ink);color:var(--yellow)}
@@ -320,6 +272,59 @@ footer{background:var(--cream);color:var(--ink);border-top:3px solid var(--ink)}
 .b-yellow,.b-cream{--l1:rgba(33,29,26,.11);--l2:rgba(33,29,26,.05)}
 .b-red{--l1:rgba(255,255,255,.17);--l2:rgba(255,255,255,.07)}
 .marquee{background-color:var(--teal-dark)}
+
+/* contact: project brief ticket + direct channels */
+.b-mat{color:var(--ink)}
+.cx-head{display:flex;flex-wrap:wrap;align-items:center;gap:14px 28px;margin-bottom:44px}
+.collab{display:inline-block;background:var(--white);color:var(--blue);font-family:var(--display);font-size:clamp(34px,5vw,48px);line-height:1;padding:10px 28px 14px;border-radius:40px;transform:rotate(-2deg);box-shadow:0 6px 0 rgba(0,0,0,.25)}
+.cx-head p{margin:0;flex:1 1 min(280px,100%);color:var(--cream);font-weight:600;font-size:17px;line-height:1.6;max-width:520px}
+.cx{display:flex;flex-wrap:wrap;gap:36px;align-items:flex-start}
+.cx>*{min-width:0}
+.brief{position:relative;flex:2 1 min(520px,100%);background-color:var(--paper);background-image:linear-gradient(rgba(60,100,120,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(60,100,120,.10) 1px,transparent 1px);background-size:28px 28px;border-radius:10px;padding:34px 34px 30px 52px;box-shadow:0 10px 0 rgba(0,0,0,.25)}
+.brief::before{content:"";position:absolute;left:16px;top:20px;bottom:20px;width:12px;background:radial-gradient(circle,var(--teal-dark) 4px,transparent 5px) 0 0/12px 28px repeat-y;opacity:.7}
+.brief-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;font-weight:800;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--teal-dark)}
+.stamp{border:3px solid var(--red);color:var(--red);padding:2px 12px;border-radius:6px;transform:rotate(6deg);font-family:var(--display);font-size:20px;letter-spacing:1px}
+.step{margin:0 0 22px;padding:0;border:0;min-width:0}
+.step.two{display:flex;flex-wrap:wrap;gap:18px}
+.step.two>div{flex:1 1 min(220px,100%);min-width:0}
+.step legend,.step label{display:block;padding:0;margin:0 0 10px;font-weight:800;font-size:15px}
+.step label em{font-style:normal;font-weight:600;color:var(--muted)}
+.step legend b,.step label b{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;margin-right:8px;border-radius:50%;background:var(--ink);color:var(--yellow);font-size:12px}
+.types{display:flex;flex-wrap:wrap;gap:10px}
+.type{flex:1 1 min(150px,45%);min-height:56px;text-align:left;padding:8px 14px;border:3px solid var(--ink);border-radius:12px;background:var(--white);color:var(--ink);font:inherit;font-weight:800;font-size:14px;cursor:pointer;display:flex;flex-direction:column;justify-content:center;transition:transform .2s var(--ease),background .2s,box-shadow .2s}
+.type small{font-family:var(--display);font-size:14px;color:var(--red);font-weight:400;line-height:1}
+.type:hover{transform:translateY(-3px);box-shadow:0 5px 0 rgba(0,0,0,.2)}
+.type[aria-pressed="true"]{background:var(--yellow);box-shadow:0 5px 0 var(--ink);transform:translateY(-3px)}
+.step input,.step select,.step textarea{width:100%;border:3px solid var(--ink);border-radius:10px;padding:12px 14px;font:inherit;font-size:16px;font-weight:600;background:var(--white);color:var(--ink)}
+.step textarea{min-height:110px;resize:vertical}
+.step [aria-invalid="true"]{border-color:var(--red);background:#fff1ee}
+.step input:focus,.step textarea:focus,.step select:focus{border-color:var(--teal)}
+.err{min-height:0;margin:6px 0 0;font-weight:700;font-size:13px;color:var(--red)}
+.err:empty{display:none}
+.hint2{margin:6px 0 0;font-size:12px;font-weight:600;color:var(--muted)}
+.preview{margin:6px 0 20px;background:var(--cream);border:3px dashed rgba(33,29,26,.4);border-radius:10px;padding:14px 16px}
+.pv-label{display:block;margin-bottom:8px;font-weight:800;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--red-dark)}
+.preview pre{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font:600 14px/1.6 var(--body);color:var(--ink)}
+.preview pre .ph{color:#8a8175}
+.actions{display:flex;flex-wrap:wrap;gap:10px}
+.actions .btn{min-height:50px;font-size:12px;padding:0 22px;flex:1 1 auto}
+.btn-ghost{background:transparent;border-color:var(--ink);color:var(--ink)}
+.btn-ghost:hover{background:var(--ink);color:var(--yellow)}
+.status{min-height:20px;margin:12px 0 0;font-weight:700;font-size:13px;color:var(--blue)}
+.direct{flex:1 1 min(300px,100%);display:flex;flex-direction:column;gap:14px}
+.direct h3{margin:0 0 2px;font-family:var(--display);font-weight:400;font-size:30px;color:var(--cream)}
+.open{display:inline-flex;align-self:flex-start;align-items:center;gap:10px;margin:0;background:var(--cream);color:var(--ink);font-weight:800;font-size:12px;letter-spacing:2px;text-transform:uppercase;padding:8px 16px;border-radius:999px;box-shadow:0 3px 0 rgba(0,0,0,.25)}
+.open i{width:10px;height:10px;border-radius:50%;background:#1faa59;animation:pulse2 1.6s ease-out infinite}
+@keyframes pulse2{0%{box-shadow:0 0 0 0 rgba(31,170,89,.6)}100%{box-shadow:0 0 0 10px rgba(31,170,89,0)}}
+.ch{display:flex;align-items:center;gap:14px;width:100%;text-align:left;text-decoration:none;font:inherit;color:var(--ink);background:var(--paper);border:0;border-radius:14px;padding:12px 16px;box-shadow:0 6px 0 rgba(0,0,0,.25);cursor:pointer;min-height:64px;transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.ch:hover{transform:translateY(-4px) rotate(-.6deg);box-shadow:0 10px 0 rgba(0,0,0,.25)}
+.ch b{flex:0 0 42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:var(--white);background:var(--ink)}
+.ch-wa b{background:#1faa59}.ch-mail b{background:var(--red)}.ch-ig b{background:var(--blue)}.ch-be b{background:var(--teal)}
+.ch span{flex:1;min-width:0;font-weight:800;font-size:15px;overflow-wrap:anywhere}
+.ch small{display:block;font-weight:700;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.ch i{font-style:normal;font-size:20px;color:var(--red);transition:transform .25s var(--ease)}
+.ch:hover i{transform:translate(3px,-3px)}
+@media (max-width:640px){.brief{padding:30px 20px 24px 40px}.brief::before{left:12px}.cx{gap:28px}}
 </style></head><body>
 <div id="loader" aria-hidden="true"><img src="img/chibi.png" alt=""><div class="bar"><i></i></div><div class="lt">loading portfolio...</div></div>
 
@@ -426,30 +431,48 @@ footer{background:var(--cream);color:var(--ink);border-top:3px solid var(--ink)}
 
 <!-- CONTACT -->
 <section class="band b-mat" id="contact"><div class="wrap rv">
-  <div class="contact">
-    <div class="c-left">
-      <span class="collab">Let's collab!</span>
-      <p>Got a project, a mascot idea, or a half-finished plan? Pick a vibe, drop a note, and send it my way. Ayo ngobrol.</p>
-      <div class="vibes" id="vibes"></div>
-      <p class="beam" id="beam"></p>
-    </div>
-    <div class="c-mid">
-      <div class="orbit">
-        <button class="copy" id="copyMail" type="button"><small>Copy email</small><b id="mailTxt">gmail</b></button>
-        <a class="o-ico o-top" href="https://wa.me/6283839131498" target="_blank" rel="noopener" aria-label="WhatsApp">WA</a>
-        <a class="o-ico o-left" href="https://www.behance.net/hellowill" target="_blank" rel="noopener" aria-label="Behance">B&#275;</a>
-        <a class="o-ico o-right" href="https://www.instagram.com/inipausss/" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
-        <a class="o-ico o-bottom" href="https://www.linkedin.com/in/willi-prabowo-endi/" target="_blank" rel="noopener" aria-label="LinkedIn">in</a>
+  <div class="cx-head">
+    <span class="collab">Let's collab!</span>
+    <p>Tell me what you need and I'll get back to you. Fill the brief, or skip the form and message me directly.</p>
+  </div>
+  <div class="cx">
+    <form class="brief" id="form" novalidate>
+      <div class="tape" style="top:-16px;left:50%;margin-left:-55px;transform:rotate(-3deg)"></div>
+      <div class="brief-top"><span>Project brief</span><span class="stamp">New!</span></div>
+
+      <fieldset class="step"><legend><b>1</b> What do you need?</legend>
+        <div class="types" id="types" role="group" aria-label="Type of work"></div>
+        <p class="err" id="eType" role="alert"></p>
+      </fieldset>
+
+      <div class="step two">
+        <div><label for="name"><b>2</b> Your name</label><input id="name" type="text" autocomplete="name" placeholder="e.g. Rina"><p class="err" id="eName" role="alert"></p></div>
+        <div><label for="when"><b>3</b> Deadline <em>(optional)</em></label>
+          <select id="when"><option>Flexible</option><option>Within 1 week</option><option>Within 1 month</option><option>Within 3 months</option></select></div>
       </div>
-      <p class="mail-full" id="mailFull">williprabowoendi@gmail.com</p>
-    </div>
-    <form class="c-form" id="form" onsubmit="return false"><div class="tape" style="top:-16px;left:50%;margin-left:-55px;transform:rotate(-3deg)"></div><div class="pin" style="top:-12px;right:26px"></div>
-      <label for="subj">Subject line</label><input id="subj" type="text" placeholder="e.g. Mascot for our campus event">
-      <label for="from">Your email (so I can reply)</label><input id="from" type="email" placeholder="you@gmail.com">
-      <label for="msg">Drop a one-line note</label><textarea id="msg" placeholder="e.g. Need a playful mascot for a student fest..."></textarea>
-      <div class="actions"><a class="btn btn-red" id="sendWa" href="#" target="_blank" rel="noopener">Send via WhatsApp</a><a class="btn btn-outline-dark" id="sendMail" href="#">Send via email</a></div>
+
+      <div class="step"><label for="msg"><b>4</b> Tell me about it</label>
+        <textarea id="msg" placeholder="What is it for, who is it for, and any references or sizes you already have?"></textarea>
+        <p class="hint2"><span id="count">0</span>/10 characters minimum</p><p class="err" id="eMsg" role="alert"></p></div>
+
+      <div class="step"><label for="reach"><b>5</b> How can I reach you?</label>
+        <input id="reach" type="text" autocomplete="email" placeholder="Email or WhatsApp number"><p class="err" id="eReach" role="alert"></p></div>
+
+      <div class="preview"><span class="pv-label">This is what I'll receive</span><pre id="preview"></pre></div>
+
+      <div class="actions"><a class="btn btn-red" id="sendWa" href="#" target="_blank" rel="noopener">Send via WhatsApp</a><a class="btn btn-outline-dark" id="sendMail" href="#">Send via email</a><button class="btn btn-ghost" id="copyBrief" type="button">Copy brief</button></div>
       <p class="status" id="status" role="status"></p>
     </form>
+
+    <aside class="direct" aria-label="Direct contact">
+      <p class="open"><i></i>Open for freelance</p>
+      <h3>Or reach me directly</h3>
+      <a class="ch ch-wa" href="https://wa.me/6283839131498" target="_blank" rel="noopener"><b>WA</b><span><small>WhatsApp</small>+62 838-3913-1498</span><i aria-hidden="true">&#8599;</i></a>
+      <button class="ch ch-mail" id="copyMail" type="button"><b>@</b><span><small id="mailLbl">Email, tap to copy</small><span id="mailTxt">williprabowoendi@gmail.com</span></span><i aria-hidden="true">&#10064;</i></button>
+      <a class="ch ch-ig" href="https://www.instagram.com/inipausss/" target="_blank" rel="noopener"><b>IG</b><span><small>Instagram</small>@inipausss</span><i aria-hidden="true">&#8599;</i></a>
+      <a class="ch ch-be" href="https://www.behance.net/hellowill" target="_blank" rel="noopener"><b>B&#275;</b><span><small>Behance</small>behance.net/hellowill</span><i aria-hidden="true">&#8599;</i></a>
+      <a class="ch ch-in" href="https://www.linkedin.com/in/willi-prabowo-endi/" target="_blank" rel="noopener"><b>in</b><span><small>LinkedIn</small>Willi Prabowo Endi</span><i aria-hidden="true">&#8599;</i></a>
+    </aside>
   </div>
 </div></section>
 </main>
@@ -557,29 +580,48 @@ function renderDetail() {
 }
 renderFilters(); renderGrid();
 
-/* contact */
-const VIBES = [['Freelance', 'bold & bubbly pitches'], ['Collab', 'two heads, one big idea'], ['Coffee chat', 'no pressure, just vibes'], ['Just hi', 'a friendly wave']];
-let vibe = 0;
-function renderVibes() {
-  $('#vibes').innerHTML = VIBES.map((v, i) => '<button type="button" class="vibe" aria-pressed="' + (i === vibe) + '" data-v="' + i + '">' + v[0] + '</button>').join('');
-  $('#beam').textContent = 'beam set to: ' + VIBES[vibe][1] + ' ✦';
+/* contact: project brief */
+const TYPES = ['Illustration', 'Mascot / character', 'Graphic design', 'Animation / motion', 'Something else'];
+let type = -1;
+$('#types').innerHTML = TYPES.map((t, i) => '<button type="button" class="type" aria-pressed="false" data-t="' + i + '"><small>0' + (i + 1) + '</small>' + esc(t) + '</button>').join('');
+const ph = (v, hint) => (v ? esc(v) : '<span class="ph">[' + hint + ']</span>');
+const val = (id) => $(id).value.trim();
+function briefText() {
+  return 'Hi Willi! I\'m ' + (val('#name') || '[your name]') + '.\nI need: ' + (type >= 0 ? TYPES[type] : '[type of work]') + '.\nDeadline: ' + $('#when').value + '.\n\n' + (val('#msg') || '[your project details]') + '\n\nReach me at: ' + (val('#reach') || '[email or WhatsApp]');
 }
-function updateLinks() {
-  const subj = $('#subj').value.trim() || VIBES[vibe][0];
-  const text = 'Hi Willi! ' + subj + '\n\n' + $('#msg').value.trim() + ($('#from').value.trim() ? '\n\nReply to: ' + $('#from').value.trim() : '');
+function updateBrief() {
+  $('#preview').innerHTML = 'Hi Willi! I\'m ' + ph(val('#name'), 'your name') + '.\nI need: ' + (type >= 0 ? esc(TYPES[type]) : '<span class="ph">[type of work]</span>') + '.\nDeadline: ' + esc($('#when').value) + '.\n\n' + ph(val('#msg'), 'your project details') + '\n\nReach me at: ' + ph(val('#reach'), 'email or WhatsApp');
+  const text = briefText(), subj = 'Project: ' + (type >= 0 ? TYPES[type] : 'hello') + (val('#name') ? ' from ' + val('#name') : '');
   $('#sendWa').href = 'https://wa.me/' + WA + '?text=' + encodeURIComponent(text);
   $('#sendMail').href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(text);
+  $('#count').textContent = Math.min(val('#msg').length, 10);
 }
-renderVibes(); updateLinks();
-['#subj', '#msg', '#from'].forEach((s) => $(s).addEventListener('input', updateLinks));
-function copyMail() {
-  const el = $('#mailTxt'), done = () => { el.textContent = 'copied!'; setTimeout(() => (el.textContent = 'gmail'), 1600); };
-  (navigator.clipboard ? navigator.clipboard.writeText(EMAIL) : Promise.reject()).then(done, () => {
-    const r = document.createRange(); r.selectNodeContents($('#mailFull')); const s = getSelection(); s.removeAllRanges(); s.addRange(r);
-    $('#status').textContent = 'Press copy on your keyboard to copy the address.';
+const RULES = [['#types', '#eType', () => type >= 0, 'Pick what you need so I know where to start.'], ['#name', '#eName', () => val('#name').length > 0, 'Please add your name.'], ['#msg', '#eMsg', () => val('#msg').length >= 10, 'Tell me a little more (at least 10 characters).'], ['#reach', '#eReach', () => val('#reach').length >= 5, 'Add an email or WhatsApp number so I can reply.']];
+function validate(show) {
+  let first = null;
+  RULES.forEach(([f, e, ok, msg]) => {
+    const bad = !ok(), el = $(f);
+    if (show) { $(e).textContent = bad ? msg : ''; el.setAttribute('aria-invalid', String(bad)); }
+    if (bad && !first) first = el;
+  });
+  return first;
+}
+updateBrief();
+['#name', '#msg', '#reach', '#when'].forEach((s) => $(s).addEventListener('input', () => { updateBrief(); if ($(s).getAttribute('aria-invalid') === 'true') validate(true); }));
+['#sendWa', '#sendMail'].forEach((s) => $(s).addEventListener('click', (e) => {
+  const bad = validate(true);
+  if (bad) { e.preventDefault(); (bad.id === 'types' ? bad.querySelector('button') : bad).focus(); $('#status').textContent = 'Almost there. Please fix the highlighted fields.'; }
+  else $('#status').textContent = 'Brief ready. If nothing opened, tap "Copy brief" and send it manually.';
+}));
+function flash(btnLbl, msg, orig) { btnLbl.textContent = msg; setTimeout(() => (btnLbl.textContent = orig), 1600); }
+function copy(text, fallbackEl, done) {
+  (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(done, () => {
+    const r = document.createRange(); r.selectNodeContents(fallbackEl); const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+    $('#status').textContent = 'Selected. Press Ctrl/Cmd + C to copy.';
   });
 }
-$('#copyMail').onclick = copyMail;
+$('#copyBrief').onclick = () => { const b = validate(true); if (b) { (b.id === 'types' ? b.querySelector('button') : b).focus(); return; } copy(briefText(), $('#preview'), () => flash($('#copyBrief'), 'Copied!', 'Copy brief')); };
+$('#copyMail').onclick = () => copy(EMAIL, $('#mailTxt'), () => flash($('#mailLbl'), 'Copied!', 'Email, tap to copy'));
 
 /* clicks */
 document.addEventListener('click', (e) => {
@@ -596,7 +638,7 @@ document.addEventListener('click', (e) => {
   else if (t('[data-close]')) { vt(() => { open = null; renderDetail(); }); }
   else if ((m = t('[data-zoom]'))) { $('#lbImg').src = m.dataset.zoom; $('#lightbox').hidden = false; $('#lbClose').focus(); }
   else if (e.target.id === 'lightbox' || t('#lbClose')) $('#lightbox').hidden = true;
-  else if ((m = t('[data-v]'))) { vibe = Number(m.dataset.v); if (!$('#subj').value || VIBES.some((v) => v[0] === $('#subj').value)) $('#subj').value = VIBES[vibe][0]; renderVibes(); updateLinks(); }
+  else if ((m = t('[data-t]'))) { type = Number(m.dataset.t); document.querySelectorAll('.type').forEach((b, k) => b.setAttribute('aria-pressed', String(k === type))); $('#eType').textContent = ''; $('#types').removeAttribute('aria-invalid'); updateBrief(); }
 });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') $('#lightbox').hidden = true; });
 
