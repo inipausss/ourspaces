@@ -312,6 +312,14 @@ footer{background:var(--cream);color:var(--ink);border-top:3px solid var(--ink)}
 @media (max-width:640px){.contact{padding:36px 22px}}
 
 .foot-btns{display:flex;flex-wrap:wrap;gap:10px}
+
+/* one background for every band: the cutting-mat grid, line colour tuned per band */
+.hero-band,.marquee,.band{--l1:rgba(255,255,255,.18);--l2:rgba(255,255,255,.08);
+  background-image:linear-gradient(var(--l1) 2px,transparent 2px),linear-gradient(90deg,var(--l1) 2px,transparent 2px),linear-gradient(var(--l2) 1px,transparent 1px),linear-gradient(90deg,var(--l2) 1px,transparent 1px);
+  background-size:120px 120px,120px 120px,24px 24px,24px 24px}
+.b-yellow,.b-cream{--l1:rgba(33,29,26,.11);--l2:rgba(33,29,26,.05)}
+.b-red{--l1:rgba(255,255,255,.17);--l2:rgba(255,255,255,.07)}
+.marquee{background-color:var(--teal-dark)}
 </style></head><body>
 <div id="loader" aria-hidden="true"><img src="img/chibi.png" alt=""><div class="bar"><i></i></div><div class="lt">loading portfolio...</div></div>
 
