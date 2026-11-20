@@ -281,14 +281,13 @@ footer .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:spac
   .xp-stage{gap:4px}
   .pill-title{padding:10px 26px 14px}
 }
-@media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation:none!important;transition:none!important}
-  html{scroll-behavior:auto}
-  #loader{display:none}
-  .js .rv{opacity:1;transform:none}
-  .rotator span{transform:none}
-  .rotator span:not(.on){display:none}
-}
+/* motion can be switched off with the footer button (html[data-motion="off"]) */
+html[data-motion="off"] *,html[data-motion="off"] *::before,html[data-motion="off"] *::after{animation:none!important;transition:none!important}
+html[data-motion="off"]{scroll-behavior:auto}
+html[data-motion="off"] #loader{display:none}
+html[data-motion="off"] .js .rv,.js[data-motion="off"] .rv{opacity:1;transform:none}
+html[data-motion="off"] .rotator span{transform:none}
+html[data-motion="off"] .rotator span:not(.on){display:none}
 
 /* contact + footer in the portfolio style: cutting mat, orange card, paper form */
 .b-mat{background-color:var(--teal);background-image:linear-gradient(rgba(255,255,255,.2) 2px,transparent 2px),linear-gradient(90deg,rgba(255,255,255,.2) 2px,transparent 2px),linear-gradient(rgba(255,255,255,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.09) 1px,transparent 1px);background-size:120px 120px,120px 120px,24px 24px,24px 24px;color:var(--ink)}
@@ -311,6 +310,8 @@ footer{background:var(--cream);color:var(--ink);border-top:3px solid var(--ink)}
 .btn-cream{background:var(--cream);color:var(--ink);border-color:var(--ink);min-height:44px;padding:0 22px}
 .btn-cream:hover{background:var(--ink);color:var(--yellow)}
 @media (max-width:640px){.contact{padding:36px 22px}}
+
+.foot-btns{display:flex;flex-wrap:wrap;gap:10px}
 </style></head><body>
 <div id="loader" aria-hidden="true"><img src="img/chibi.png" alt=""><div class="bar"><i></i></div><div class="lt">loading portfolio...</div></div>
 
@@ -445,15 +446,21 @@ footer{background:var(--cream);color:var(--ink);border-top:3px solid var(--ink)}
 </div></section>
 </main>
 
-<footer><div class="wrap"><span>&copy; 2026 Willi Prabowo Endi &middot; made in Yogyakarta</span><button class="btn btn-cream" id="footTop" type="button">Back to top &uarr;</button></div></footer>
+<footer><div class="wrap"><span>&copy; 2026 Willi Prabowo Endi &middot; made in Yogyakarta</span><span class="foot-btns"><button class="btn btn-cream" id="motionBtn" type="button">Animation: on</button><button class="btn btn-cream" id="footTop" type="button">Back to top &uarr;</button></span></div></footer>
 <button id="totop" type="button" aria-label="Back to top">&uarr;</button>
 <div id="lightbox" hidden role="dialog" aria-label="Image preview"><button class="btn btn-yellow" type="button" id="lbClose">Close</button><img alt="" id="lbImg"></div>
 
 <script>
 const $ = (s) => document.querySelector(s);
 const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 document.documentElement.classList.add('js');
+let reduce = false;
+try { reduce = localStorage.getItem('motion') === 'off'; } catch (e) {}
+const setMotion = (off) => {
+  reduce = off; document.documentElement.dataset.motion = off ? 'off' : 'on';
+  $('#motionBtn').textContent = 'Animation: ' + (off ? 'off' : 'on');
+  try { localStorage.setItem('motion', off ? 'off' : 'on'); } catch (e) {}
+};
 /* smart-animate: View Transitions morph elements that share a view-transition-name */
 const vt = (fn) => { if (!reduce && document.startViewTransition) document.startViewTransition(fn); else fn(); };
 const EMAIL = 'williprabowoendi@gmail.com', WA = '6283839131498';
@@ -584,6 +591,9 @@ document.addEventListener('click', (e) => {
   else if ((m = t('[data-v]'))) { vibe = Number(m.dataset.v); if (!$('#subj').value || VIBES.some((v) => v[0] === $('#subj').value)) $('#subj').value = VIBES[vibe][0]; renderVibes(); updateLinks(); }
 });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') $('#lightbox').hidden = true; });
+
+/* motion toggle */
+setMotion(reduce); $('#motionBtn').onclick = () => setMotion(!reduce);
 
 /* back to top */
 const top0 = () => scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
