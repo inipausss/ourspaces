@@ -555,7 +555,7 @@ fitRot(); (document.fonts ? document.fonts.ready : Promise.resolve()).then(fitRo
 const SK = {
   Design: [['Layouting', 'Posters, carousels and flyers that keep the grid tidy and the brand consistent.'], ['Social Media Design', 'Campaign sets for Instagram and more, as done for Haramain Traveling Indonesia.'], ['Digital Imaging', 'Photo retouching and image compositing for promo material.'], ['Illustration', 'Characters, mascots and backgrounds, from sketch to final color.']],
   'Motion & Video': [['Animation', '2D animation for academic and team short films like Es Cekek and Udin Si Onde.'], ['Motion Design', 'Moving graphics and screen visuals for events and promos.'], ['Video Editing', 'Trailers and cutscenes, as made for Kisah Rasa.'], ['Compositing', 'Final composite that joins backgrounds, characters and effects.'], ['Video Jockey', 'Live visuals for the main PPM 2025 stage.']],
-  'Soft Skills': [['Teamwork', 'Team projects from university work to a Ministry of Industry certification film.'], ['Fast Learning', 'Picking up new tools and workflows quickly, project after project.'], ['Responsibility', 'Delivering on time, from weekly layout updates to live event visuals.']]
+  'Other': [['Teamwork', 'Team projects from university work to a Ministry of Industry certification film.'], ['Fast Learning', 'Picking up new tools and workflows quickly, project after project.'], ['Responsibility', 'Delivering on time, from weekly layout updates to live event visuals.']]
 };
 const FCLS = ['f1', 'f2', 'f3'];
 let grp = Object.keys(SK)[0], sk = 0;
@@ -571,7 +571,7 @@ const LV = ['', 'Beginner', 'Basic', 'Comfortable', 'Confident', 'Expert'];
 const TOOLS = {
   Design: ['Design & Illustration Tools', [['Photoshop', 'Ps', '#001E36', '#31A8FF', 4], ['Illustrator', 'Ai', '#330000', '#FF9A00', 3], ['Figma', 'Fg', '#F24E1E', '#fff', 4], ['Clip Studio Paint', 'CSP', '#2b2b2b', '#fff', 4]]],
   'Motion & Video': ['Video & Motion Tools', [['After Effects', 'Ae', '#00005B', '#9999FF', 3], ['Premiere Pro', 'Pr', '#00005B', '#9999FF', 4], ['DaVinci Resolve', 'Dv', '#3b3b3b', '#fff', 3], ['CapCut', 'Cc', '#000', '#fff', 4]]],
-  'Soft Skills': ['Other Tools', [['Google Workspace', 'G', '#4285F4', '#fff', 4], ['Claude AI', 'Cl', '#D97757', '#fff', 3], ['Notion', 'N', '#fff', '#000', 3]]]
+  'Other': ['Other Tools', [['Google Workspace', 'G', '#4285F4', '#fff', 4], ['Claude AI', 'Cl', '#D97757', '#fff', 3], ['Notion', 'N', '#fff', '#000', 3]]]
 };
 function openTools(g) {
   const [title, list] = TOOLS[g];
