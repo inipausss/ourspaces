@@ -137,12 +137,6 @@ button.chip[aria-pressed="true"]{background:var(--ink);color:var(--yellow)}
 .folder[aria-selected="true"] .body{outline:4px solid var(--yellow);outline-offset:3px}
 .f1 .tab,.f1 .body{background:var(--yellow)}.f2 .tab,.f2 .body{background:var(--cream)}.f3 .tab,.f3 .body{background:var(--ink);color:var(--yellow)}
 .f3 .tab{background:#000}
-.skills-board{max-width:760px;margin:36px auto 0;background:var(--paper);color:var(--ink);border-radius:20px;padding:28px;box-shadow:0 8px 0 rgba(0,0,0,.22);display:flex;flex-wrap:wrap;gap:22px}
-.skills-board>*{flex:1 1 min(280px,100%);min-width:0}
-.chips{display:flex;flex-wrap:wrap;gap:10px;align-content:flex-start}
-.skill-info{background:var(--white);border:3px solid var(--ink);border-radius:14px;padding:18px;min-height:130px}
-.skill-info h3{margin:0 0 8px;font-family:var(--display);font-weight:400;font-size:28px;color:var(--red)}
-.skill-info p{margin:0;font-size:16px;line-height:1.6;color:var(--muted);font-weight:600}
 
 /* skills: tools popup */
 #toolsModal{position:fixed;inset:0;z-index:90;background:rgba(10,30,28,.8);display:flex;align-items:center;justify-content:center;padding:20px}
@@ -156,10 +150,10 @@ button.chip[aria-pressed="true"]{background:var(--ink);color:var(--yellow)}
 .tool:hover,.tool:focus-visible{transform:translateY(-5px) rotate(-1.5deg);box-shadow:0 9px 0 rgba(0,0,0,.25);background:var(--yellow)}
 .tool .ico{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-family:var(--display);font-size:22px;border:2px solid var(--ink)}
 .tool b{font-size:14px;font-weight:800;text-align:center}
-.dots{display:flex;gap:5px}
-.dots i{width:10px;height:10px;border-radius:50%;background:rgba(0,0,0,.15)}
-.dots i.on{background:var(--red)}
-.tool:hover .dots i.on,.tool:focus-visible .dots i.on{animation:pop .4s var(--ease) both;animation-delay:calc(var(--i)*70ms)}
+.rate{display:flex;gap:5px}
+.rate i{width:10px;height:10px;border-radius:50%;background:rgba(0,0,0,.15)}
+.rate i.on{background:var(--red)}
+.tool:hover .rate i.on,.tool:focus-visible .rate i.on{animation:pop .4s var(--ease) both;animation-delay:calc(var(--i)*70ms)}
 .tm-hint{margin:16px 0 0;text-align:center;font-weight:800;font-size:14px;color:var(--muted);min-height:1.4em}
 
 /* experience: 3-up carousel */
@@ -240,7 +234,6 @@ footer .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:spac
 /* reveal */
 .js .rv{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
 .js .rv.in{opacity:1;transform:none}
-.skill-info h3,.skill-info p{animation:fadeIn .3s ease both}
 
 /* smart-animate */
 ::view-transition-group(*){animation-duration:.5s;animation-timing-function:var(--ease)}
@@ -257,7 +250,7 @@ footer .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:spac
   .cover .phone{display:none}
   .folder{width:30%;min-width:96px;height:120px}
   .folder .body{font-size:12px;padding-bottom:10px}
-  .skills-board,.c-form,.detail{padding-left:20px;padding-right:20px}
+  .c-form,.detail{padding-left:20px;padding-right:20px}
   .arrow{flex-basis:38px;width:38px;height:38px;font-size:24px}
   .xp-stage{gap:4px}
   .pill-title{padding:10px 26px 14px}
@@ -419,10 +412,6 @@ footer{background:var(--cream);color:var(--ink);border-top:3px solid var(--ink)}
 <section class="band b-red" id="skills"><div class="wrap rv">
   <h2 class="pill-title pt-outline center">Skills</h2>
   <div class="folders" role="tablist" aria-label="Skill groups" id="tabs"></div>
-  <div class="skills-board">
-    <div class="chips" id="chips"></div>
-    <div class="skill-info" id="skillInfo" aria-live="polite"></div>
-  </div>
 </div></section>
 
 <!-- EXPERIENCE -->
@@ -552,17 +541,11 @@ const fitRot = () => { $('#rotator').style.minWidth = Math.ceil(Math.max(...rs.m
 fitRot(); (document.fonts ? document.fonts.ready : Promise.resolve()).then(fitRot);
 
 /* skills: folders */
-const SK = {
-  Design: [['Layouting', 'Posters, carousels and flyers that keep the grid tidy and the brand consistent.'], ['Social Media Design', 'Campaign sets for Instagram and more, as done for Haramain Traveling Indonesia.'], ['Digital Imaging', 'Photo retouching and image compositing for promo material.'], ['Illustration', 'Characters, mascots and backgrounds, from sketch to final color.']],
-  'Motion & Video': [['Animation', '2D animation for academic and team short films like Es Cekek and Udin Si Onde.'], ['Motion Design', 'Moving graphics and screen visuals for events and promos.'], ['Video Editing', 'Trailers and cutscenes, as made for Kisah Rasa.'], ['Compositing', 'Final composite that joins backgrounds, characters and effects.'], ['Video Jockey', 'Live visuals for the main PPM 2025 stage.']],
-  'Other': [['Teamwork', 'Team projects from university work to a Ministry of Industry certification film.'], ['Fast Learning', 'Picking up new tools and workflows quickly, project after project.'], ['Responsibility', 'Delivering on time, from weekly layout updates to live event visuals.']]
-};
+const GROUPS = ['Design', 'Motion & Video', 'Other'];
 const FCLS = ['f1', 'f2', 'f3'];
-let grp = Object.keys(SK)[0], sk = 0;
+let grp = GROUPS[0];
 function renderSkills() {
-  $('#tabs').innerHTML = Object.keys(SK).map((g, i) => '<button class="folder ' + FCLS[i] + '" role="tab" aria-selected="' + (g === grp) + '" data-g="' + esc(g) + '"><span class="tab"></span><span class="body">' + esc(g) + '</span></button>').join('');
-  $('#chips').innerHTML = SK[grp].map((s, i) => '<button class="chip" type="button" aria-pressed="' + (i === sk) + '" data-s="' + i + '">' + esc(s[0]) + '</button>').join('');
-  const s = SK[grp][sk]; $('#skillInfo').innerHTML = '<h3>' + esc(s[0]) + '</h3><p>' + esc(s[1]) + '</p>';
+  $('#tabs').innerHTML = GROUPS.map((g, i) => '<button class="folder ' + FCLS[i] + '" role="tab" aria-selected="' + (g === grp) + '" data-g="' + esc(g) + '"><span class="tab"></span><span class="body">' + esc(g) + '</span></button>').join('');
 }
 renderSkills();
 
@@ -576,7 +559,7 @@ const TOOLS = {
 function openTools(g) {
   const [title, list] = TOOLS[g];
   $('#tmTitle').textContent = title;
-  $('#tmGrid').innerHTML = list.map(([n, ab, bg, fg, r]) => '<button class="tool" type="button" data-n="' + esc(n) + '" data-r="' + r + '" aria-label="' + esc(n) + ', ' + r + ' out of 5"><span class="ico" style="background:' + bg + ';color:' + fg + '">' + ab + '</span><b>' + esc(n) + '</b><span class="dots">' + [1, 2, 3, 4, 5].map((k) => '<i' + (k <= r ? ' class="on"' : '') + ' style="--i:' + k + '"></i>').join('') + '</span></button>').join('');
+  $('#tmGrid').innerHTML = list.map(([n, ab, bg, fg, r]) => '<button class="tool" type="button" data-n="' + esc(n) + '" data-r="' + r + '" aria-label="' + esc(n) + ', ' + r + ' out of 5"><span class="ico" style="background:' + bg + ';color:' + fg + '">' + ab + '</span><b>' + esc(n) + '</b><span class="rate">' + [1, 2, 3, 4, 5].map((k) => '<i' + (k <= r ? ' class="on"' : '') + ' style="--i:' + k + '"></i>').join('') + '</span></button>').join('');
   $('#tmHint').textContent = 'hover a tool ✦';
   $('#toolsModal').hidden = false; $('.tm-x').focus();
 }
@@ -684,10 +667,9 @@ $('#copyMail').onclick = () => copy(EMAIL, $('#mailTxt'), () => flash($('#mailLb
 document.addEventListener('click', (e) => {
   const t = (s) => e.target.closest(s);
   let m;
-  if ((m = t('[data-g]'))) { vt(() => { grp = m.dataset.g; sk = 0; renderSkills(); }); openTools(m.dataset.g); }
+  if ((m = t('[data-g]'))) { vt(() => { grp = m.dataset.g; renderSkills(); }); openTools(m.dataset.g); }
   else if (e.target.id === 'toolsModal' || t('[data-tx]')) $('#toolsModal').hidden = true;
   else if (t('.tool')) toolHint(e);
-  else if ((m = t('[data-s]'))) { vt(() => { sk = Number(m.dataset.s); renderSkills(); }); }
   else if ((m = t('[data-filter]'))) { vt(() => { filter = m.dataset.filter; open = null; renderFilters(); renderGrid(); renderDetail(); }); }
   else if ((m = t('[data-open]'))) {
     const i = Number(m.dataset.open), img = m.querySelector('.card-img');
