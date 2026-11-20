@@ -104,12 +104,6 @@ button.chip[aria-pressed="true"]{background:var(--ink);color:var(--yellow)}
 @keyframes float{50%{translate:0 -10px}}
 
 /* marquee */
-.marquee{position:relative;background:var(--teal-dark);color:var(--yellow);overflow:hidden;white-space:nowrap;padding-top:34px}
-.wave-top{position:absolute;left:0;top:-1px;width:100%;height:34px;fill:var(--teal)}
-.marquee .track{display:inline-flex;padding:14px 0 18px;animation:marq 26s linear infinite}
-.marquee span{font-family:var(--display);font-size:28px;letter-spacing:2px;text-transform:uppercase;padding:0 26px}
-.marquee span::after{content:"\2726";color:var(--red);padding-left:52px}
-@keyframes marq{to{transform:translateX(-50%)}}
 
 /* bands */
 .band{position:relative;padding:92px 0 100px}
@@ -266,12 +260,11 @@ footer{background:var(--cream);color:var(--ink);border-top:3px solid var(--ink)}
 .foot-btns{display:flex;flex-wrap:wrap;gap:10px}
 
 /* one background for every band: the cutting-mat grid, line colour tuned per band */
-.hero-band,.marquee,.band{--l1:rgba(255,255,255,.18);--l2:rgba(255,255,255,.08);
+.hero-band,.tapes,.band{--l1:rgba(255,255,255,.18);--l2:rgba(255,255,255,.08);
   background-image:linear-gradient(var(--l1) 2px,transparent 2px),linear-gradient(90deg,var(--l1) 2px,transparent 2px),linear-gradient(var(--l2) 1px,transparent 1px),linear-gradient(90deg,var(--l2) 1px,transparent 1px);
   background-size:120px 120px,120px 120px,24px 24px,24px 24px}
 .b-yellow,.b-cream{--l1:rgba(33,29,26,.11);--l2:rgba(33,29,26,.05)}
 .b-red{--l1:rgba(255,255,255,.17);--l2:rgba(255,255,255,.07)}
-.marquee{background-color:var(--teal-dark)}
 
 /* contact: project brief ticket + direct channels */
 .b-mat{color:var(--ink)}
@@ -325,6 +318,30 @@ footer{background:var(--cream);color:var(--ink);border-top:3px solid var(--ink)}
 .ch i{font-style:normal;font-size:20px;color:var(--red);transition:transform .25s var(--ease)}
 .ch:hover i{transform:translate(3px,-3px)}
 @media (max-width:640px){.brief{padding:30px 20px 24px 40px}.brief::before{left:12px}.cx{gap:28px}}
+
+/* tape strips between hero and about */
+.tapes{position:relative;height:150px;overflow:hidden;background-color:var(--teal-dark)}
+.tape-strip{position:absolute;left:-6%;width:112%;overflow:hidden;white-space:nowrap;border-top:3px dashed var(--ink);border-bottom:3px dashed var(--ink);box-shadow:0 6px 0 rgba(0,0,0,.25)}
+.t1{top:22px;transform:rotate(-1.8deg);background:var(--yellow);color:var(--ink)}
+.t2{top:76px;transform:rotate(1.4deg);background:var(--ink);color:var(--yellow)}
+.tape-strip .track{display:inline-flex;padding:10px 0;animation:marq 30s linear infinite;will-change:transform}
+.t2 .track{animation-direction:reverse;animation-duration:36s}
+.tape-strip:hover .track{animation-play-state:paused}
+.tape-strip span{font-family:var(--display);font-size:26px;letter-spacing:2px;text-transform:uppercase;padding:0 26px}
+.tape-strip span::after{content:"\2726";color:var(--red);padding-left:52px}
+@keyframes marq{to{transform:translateX(-50%)}}
+@media (max-width:640px){.tapes{height:132px}.tape-strip span{font-size:22px}.t2{top:68px}}
+
+/* certificate flip: back faces get their own colour + flip hint */
+.c1 .back{background:var(--yellow)}
+.c2 .back{background:var(--teal);color:var(--white)}
+.c2 .back em{color:#dff3ee}.c2 .back i{color:var(--yellow)}
+.flip{position:absolute;right:14px;bottom:12px;font-style:normal;font-weight:800;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:999px;background:rgba(33,29,26,.12)}
+.c2 .back .flip{background:rgba(255,255,255,.2)}
+.cert-card:hover .flip{background:var(--ink);color:var(--yellow)}
+
+/* carousel: soft fade at the edges instead of a hard clip */
+.xp-viewport{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 16%,#000 84%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 16%,#000 84%,transparent 100%)}
 </style></head><body>
 <div id="loader" aria-hidden="true"><img src="img/chibi.png" alt=""><div class="bar"><i></i></div><div class="lt">loading portfolio...</div></div>
 
@@ -358,7 +375,10 @@ footer{background:var(--cream);color:var(--ink);border-top:3px solid var(--ink)}
   </div>
 </div>
 
-<div class="marquee" aria-hidden="true"><svg class="wave-top" viewBox="0 0 1440 50" preserveAspectRatio="none"><path d="M0 50V28Q180 -6 360 28T720 28T1080 28T1440 28V50Z"/></svg><div class="track" id="track"></div></div>
+<div class="tapes" aria-hidden="true">
+  <div class="tape-strip t1"><div class="track" id="track"></div></div>
+  <div class="tape-strip t2"><div class="track" id="track2"></div></div>
+</div>
 
 <!-- ABOUT -->
 <section class="band b-yellow" id="about"><div class="wrap rv">
@@ -408,13 +428,13 @@ footer{background:var(--cream);color:var(--ink);border-top:3px solid var(--ink)}
     <div class="cert-grid">
       <button class="cert-card c1" type="button" aria-pressed="false">
         <span class="tab-top"></span><span class="year">2026</span>
-        <span class="face front"><b>2D Animation</b><em>Junior 2D Animator Reskilling Training Batch 1</em><i>&#10003; Verified</i></span>
-        <span class="face back"><b>BDI Denpasar</b><em>Ministry of Industry</em><i>Issuer</i></span>
+        <span class="face front"><b>2D Animation</b><em>Junior 2D Animator Reskilling Training Batch 1</em><i>&#10003; Verified</i><span class="flip">Tap to flip &#8635;</span></span>
+        <span class="face back"><b>BDI Denpasar</b><em>Ministry of Industry</em><i>Issuer</i><span class="flip">&#8634; Flip back</span></span>
       </button>
       <button class="cert-card c2" type="button" aria-pressed="false">
         <span class="tab-top"></span><span class="year">2026</span>
-        <span class="face front"><b>S1 Information Technology</b><em>Universitas Amikom Yogyakarta, 2022 - 2026</em><i>&#10003; Graduated</i></span>
-        <span class="face back"><b>GPA 3.97</b><em>out of 4.00</em><i>Computer Faculty Science</i></span>
+        <span class="face front"><b>S1 Information Technology</b><em>Universitas Amikom Yogyakarta, 2022 - 2026</em><i>&#10003; Graduated</i><span class="flip">Tap to flip &#8635;</span></span>
+        <span class="face back"><b>GPA 3.97</b><em>out of 4.00</em><i>Computer Faculty Science</i><span class="flip">&#8634; Flip back</span></span>
       </button>
     </div>
   </div>
@@ -477,7 +497,7 @@ footer{background:var(--cream);color:var(--ink);border-top:3px solid var(--ink)}
 </div></section>
 </main>
 
-<footer><div class="wrap"><span>&copy; 2026 Willi Prabowo Endi &middot; made in Yogyakarta</span><span class="foot-btns"><button class="btn btn-cream" id="motionBtn" type="button">Animation: on</button><button class="btn btn-cream" id="footTop" type="button">Back to top &uarr;</button></span></div></footer>
+<footer><div class="wrap"><span>&copy; 2026 Willi Prabowo Endi &middot; made in Yogyakarta</span><span class="foot-btns"><button class="btn btn-cream" id="motionBtn" type="button">Animation: on</button></span></div></footer>
 <button id="totop" type="button" aria-label="Back to top">&uarr;</button>
 <div id="lightbox" hidden role="dialog" aria-label="Image preview"><button class="btn btn-yellow" type="button" id="lbClose">Close</button><img alt="" id="lbImg"></div>
 
@@ -498,7 +518,9 @@ const EMAIL = 'williprabowoendi@gmail.com', WA = '6283839131498';
 
 /* marquee */
 const words = ['Illustration', 'Graphic Design', '2D Animation', 'Video Jockey', 'Compositing', 'Mascot Design'];
-$('#track').innerHTML = words.concat(words, words, words).map((w) => '<span>' + w + '</span>').join('');
+const words2 = ['Open for freelance', 'Yogyakarta, Indonesia', 'Ayo ngobrol', 'Sketch to final', 'Playful & bold'];
+const fill = (el, ws) => { el.innerHTML = ws.concat(ws, ws, ws).map((w) => '<span>' + w + '</span>').join(''); };
+fill($('#track'), words); fill($('#track2'), words2);
 
 /* role rotator */
 const rs = [...document.querySelectorAll('#rotator span')];
@@ -647,7 +669,7 @@ setMotion(reduce); $('#motionBtn').onclick = () => setMotion(!reduce);
 
 /* back to top */
 const top0 = () => scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
-$('#totop').onclick = top0; $('#footTop').onclick = top0;
+$('#totop').onclick = top0;
 addEventListener('scroll', () => $('#totop').classList.toggle('show', scrollY > 600), { passive: true });
 
 /* reveal + count-up */
