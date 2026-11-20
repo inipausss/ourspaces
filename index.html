@@ -144,6 +144,24 @@ button.chip[aria-pressed="true"]{background:var(--ink);color:var(--yellow)}
 .skill-info h3{margin:0 0 8px;font-family:var(--display);font-weight:400;font-size:28px;color:var(--red)}
 .skill-info p{margin:0;font-size:16px;line-height:1.6;color:var(--muted);font-weight:600}
 
+/* skills: tools popup */
+#toolsModal{position:fixed;inset:0;z-index:90;background:rgba(10,30,28,.8);display:flex;align-items:center;justify-content:center;padding:20px}
+#toolsModal[hidden]{display:none}
+#toolsModal:not([hidden]){animation:fadeIn .25s ease both}
+.tm-box{position:relative;background:var(--white);color:var(--ink);border-radius:24px;padding:26px 24px 18px;width:min(560px,100%);max-height:90vh;overflow:auto;box-shadow:0 10px 0 rgba(0,0,0,.25);animation:zoomIn .35s cubic-bezier(.3,1.3,.5,1) both}
+.tm-box h3{margin:0 0 18px;font-family:var(--display);font-weight:400;font-size:28px;color:var(--red);padding-right:52px}
+.tm-x{position:absolute;top:18px;right:18px;width:44px;height:44px;border-radius:50%;border:3px solid var(--ink);background:var(--yellow);color:var(--ink);font-size:18px;font-weight:800;cursor:pointer}
+.tm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px}
+.tool{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 8px;background:var(--paper);border:3px solid var(--ink);border-radius:16px;cursor:pointer;font:inherit;color:var(--ink);box-shadow:0 4px 0 rgba(0,0,0,.2);transition:transform .25s var(--ease),box-shadow .25s var(--ease),background .2s}
+.tool:hover,.tool:focus-visible{transform:translateY(-5px) rotate(-1.5deg);box-shadow:0 9px 0 rgba(0,0,0,.25);background:var(--yellow)}
+.tool .ico{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-family:var(--display);font-size:22px;border:2px solid var(--ink)}
+.tool b{font-size:14px;font-weight:800;text-align:center}
+.dots{display:flex;gap:5px}
+.dots i{width:10px;height:10px;border-radius:50%;background:rgba(0,0,0,.15)}
+.dots i.on{background:var(--red)}
+.tool:hover .dots i.on,.tool:focus-visible .dots i.on{animation:pop .4s var(--ease) both;animation-delay:calc(var(--i)*70ms)}
+.tm-hint{margin:16px 0 0;text-align:center;font-weight:800;font-size:14px;color:var(--muted);min-height:1.4em}
+
 /* experience: 3-up carousel */
 .xp-stage{display:flex;align-items:center;gap:10px;margin-top:36px}
 .xp-viewport{flex:1;min-width:0;overflow:hidden;padding:24px 0}
@@ -499,6 +517,7 @@ footer{background:var(--cream);color:var(--ink);border-top:3px solid var(--ink)}
 <footer><div class="wrap"><span>&copy; 2026 Willi Prabowo Endi &middot; made in Yogyakarta</span><span class="foot-btns"><button class="btn btn-cream" id="motionBtn" type="button">Animation: on</button></span></div></footer>
 <button id="totop" type="button" aria-label="Back to top">&uarr;</button>
 <div id="lightbox" hidden role="dialog" aria-label="Image preview"><button class="btn btn-yellow" type="button" id="lbClose">Close</button><img alt="" id="lbImg"></div>
+<div id="toolsModal" hidden role="dialog" aria-labelledby="tmTitle"><div class="tm-box"><h3 id="tmTitle"></h3><button class="tm-x" type="button" data-tx aria-label="Close">&times;</button><div class="tm-grid" id="tmGrid"></div><p class="tm-hint" id="tmHint" aria-live="polite"></p></div></div>
 
 <script>
 const $ = (s) => document.querySelector(s);
@@ -546,6 +565,23 @@ function renderSkills() {
   const s = SK[grp][sk]; $('#skillInfo').innerHTML = '<h3>' + esc(s[0]) + '</h3><p>' + esc(s[1]) + '</p>';
 }
 renderSkills();
+
+/* skills: tools popup (folder click). Tool = [name, badge text, badge bg, badge fg, rating 1-5] */
+const LV = ['', 'Beginner', 'Basic', 'Comfortable', 'Confident', 'Expert'];
+const TOOLS = {
+  Design: ['Design & Illustration Tools', [['Photoshop', 'Ps', '#001E36', '#31A8FF', 4], ['Illustrator', 'Ai', '#330000', '#FF9A00', 3], ['Figma', 'Fg', '#F24E1E', '#fff', 4], ['Clip Studio Paint', 'CSP', '#2b2b2b', '#fff', 4]]],
+  'Motion & Video': ['Video & Motion Tools', [['After Effects', 'Ae', '#00005B', '#9999FF', 3], ['Premiere Pro', 'Pr', '#00005B', '#9999FF', 4], ['DaVinci Resolve', 'Dv', '#3b3b3b', '#fff', 3], ['CapCut', 'Cc', '#000', '#fff', 4]]],
+  'Soft Skills': ['Other Tools', [['Google Workspace', 'G', '#4285F4', '#fff', 4], ['Claude AI', 'Cl', '#D97757', '#fff', 3], ['Notion', 'N', '#fff', '#000', 3]]]
+};
+function openTools(g) {
+  const [title, list] = TOOLS[g];
+  $('#tmTitle').textContent = title;
+  $('#tmGrid').innerHTML = list.map(([n, ab, bg, fg, r]) => '<button class="tool" type="button" data-n="' + esc(n) + '" data-r="' + r + '" aria-label="' + esc(n) + ', ' + r + ' out of 5"><span class="ico" style="background:' + bg + ';color:' + fg + '">' + ab + '</span><b>' + esc(n) + '</b><span class="dots">' + [1, 2, 3, 4, 5].map((k) => '<i' + (k <= r ? ' class="on"' : '') + ' style="--i:' + k + '"></i>').join('') + '</span></button>').join('');
+  $('#tmHint').textContent = 'hover a tool ✦';
+  $('#toolsModal').hidden = false; $('.tm-x').focus();
+}
+const toolHint = (e) => { const b = e.target.closest('.tool'); if (b) $('#tmHint').textContent = b.dataset.n + ' · ' + b.dataset.r + '/5 · ' + LV[b.dataset.r]; };
+$('#toolsModal').addEventListener('mouseover', toolHint); $('#toolsModal').addEventListener('focusin', toolHint);
 
 /* experience: 3-up carousel */
 const XP = [
@@ -648,7 +684,9 @@ $('#copyMail').onclick = () => copy(EMAIL, $('#mailTxt'), () => flash($('#mailLb
 document.addEventListener('click', (e) => {
   const t = (s) => e.target.closest(s);
   let m;
-  if ((m = t('[data-g]'))) { vt(() => { grp = m.dataset.g; sk = 0; renderSkills(); }); }
+  if ((m = t('[data-g]'))) { vt(() => { grp = m.dataset.g; sk = 0; renderSkills(); }); openTools(m.dataset.g); }
+  else if (e.target.id === 'toolsModal' || t('[data-tx]')) $('#toolsModal').hidden = true;
+  else if (t('.tool')) toolHint(e);
   else if ((m = t('[data-s]'))) { vt(() => { sk = Number(m.dataset.s); renderSkills(); }); }
   else if ((m = t('[data-filter]'))) { vt(() => { filter = m.dataset.filter; open = null; renderFilters(); renderGrid(); renderDetail(); }); }
   else if ((m = t('[data-open]'))) {
@@ -661,7 +699,7 @@ document.addEventListener('click', (e) => {
   else if (e.target.id === 'lightbox' || t('#lbClose')) $('#lightbox').hidden = true;
   else if ((m = t('[data-t]'))) { type = Number(m.dataset.t); document.querySelectorAll('.type').forEach((b, k) => b.setAttribute('aria-pressed', String(k === type))); $('#eType').textContent = ''; $('#types').removeAttribute('aria-invalid'); updateBrief(); }
 });
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') $('#lightbox').hidden = true; });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { $('#lightbox').hidden = true; $('#toolsModal').hidden = true; } });
 
 /* motion toggle */
 setMotion(reduce); $('#motionBtn').onclick = () => setMotion(!reduce);
