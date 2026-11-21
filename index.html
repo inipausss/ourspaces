@@ -138,22 +138,6 @@ button.chip[aria-pressed="true"]{background:var(--ink);color:var(--yellow)}
 .f1 .tab,.f1 .body{background:var(--yellow)}.f2 .tab,.f2 .body{background:var(--cream)}.f3 .tab,.f3 .body{background:var(--ink);color:var(--yellow)}
 .f3 .tab{background:#000}
 
-/* ratecard */
-.rc{display:grid;grid-template-columns:1.6fr 1fr;gap:24px;max-width:960px;margin:0 auto;align-items:start}
-.rc-list{list-style:none;margin:0;padding:10px 28px;background:var(--white);border:3px solid var(--ink);border-radius:20px;box-shadow:0 8px 0 rgba(0,0,0,.22)}
-.rc-list li{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 0;border-bottom:2px dashed rgba(0,0,0,.25)}
-.rc-list li:last-child{border-bottom:0}
-.rc-list b{display:block;font-size:17px;font-style:italic}
-.rc-list small{display:block;margin-top:2px;font-size:13px;font-weight:600;color:var(--muted)}
-.rc-list em{font-style:normal;font-weight:800;font-size:19px;color:var(--red);white-space:nowrap}
-.rc-terms{background:var(--ink);color:var(--cream);border-radius:20px;padding:22px 24px;box-shadow:0 8px 0 rgba(0,0,0,.22)}
-.rc-terms h3{margin:0 0 12px;font-family:var(--display);font-weight:400;font-size:28px;color:var(--yellow)}
-.rc-terms ul{margin:0;padding-left:18px;display:grid;gap:10px;font-size:14px;line-height:1.5;font-weight:600}
-.rc-terms li::marker{color:var(--red)}
-.rc-terms b{color:var(--yellow)}
-.rc-btns{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:34px}
-@media(max-width:760px){.rc{grid-template-columns:1fr}.rc-list{padding:6px 20px}.rc-list li{flex-direction:column;align-items:flex-start;gap:4px}}
-
 /* skills: tools popup */
 #toolsModal{position:fixed;inset:0;z-index:90;background:rgba(10,30,28,.8);display:flex;align-items:center;justify-content:center;padding:20px}
 #toolsModal[hidden]{display:none}
@@ -374,7 +358,7 @@ footer{background:var(--cream);color:var(--ink);border-top:3px solid var(--ink)}
 <header class="nav"><div class="wrap">
   <a class="logo" href="#top">Willi's Portofolio</a>
   <nav aria-label="Main"><ul>
-    <li><a href="#about">About</a></li><li><a href="#skills">Skills</a></li><li><a href="#experience">Experience</a></li><li><a href="#projects">Projects</a></li><li><a href="#ratecard">Rate Card</a></li><li><a href="#contact">Contact</a></li>
+    <li><a href="#about">About</a></li><li><a href="#skills">Skills</a></li><li><a href="#experience">Experience</a></li><li><a href="#projects">Projects</a></li><li><a href="#contact">Contact</a></li>
   </ul></nav>
 </div></header>
 
@@ -469,17 +453,6 @@ footer{background:var(--cream);color:var(--ink);border-top:3px solid var(--ink)}
   <div class="filters" id="filters" role="group" aria-label="Filter projects"></div>
   <div id="detail"></div>
   <div class="grid" id="grid"></div>
-</div></section>
-
-<!-- RATECARD -->
-<section class="band b-yellow" id="ratecard"><div class="wrap rv">
-  <h2 class="pill-title pt-pink center">Rate Card</h2>
-  <p class="sub">Illustrator / Design &middot; harga mulai dari, final tergantung brief &#10022;</p>
-  <div class="rc">
-    <ul class="rc-list" id="rcList"></ul>
-    <aside class="rc-terms"><h3>Ketentuan</h3><ul id="rcTerms"></ul></aside>
-  </div>
-  <div class="rc-btns"><a class="btn btn-red" href="#contact">Order now</a><a class="btn btn-outline-dark" href="ratecard.pdf" download>Download PDF</a></div>
 </div></section>
 
 <!-- CONTACT -->
@@ -619,25 +592,6 @@ showXp(xi); (document.fonts ? document.fonts.ready : Promise.resolve()).then(() 
 
 /* certificates */
 document.querySelectorAll('.cert-card').forEach((c) => c.addEventListener('click', () => c.setAttribute('aria-pressed', String(c.getAttribute('aria-pressed') !== 'true'))));
-
-/* ratecard: edit prices here */
-const RC = [
-  ['Tipografi / Layout', 'Kaos, totebag, stiker berbasis teks dan layout', 'Rp75rb - 200rb'],
-  ['Ilustrasi Simpel', '1 karakter atau objek, satu desain merch', 'Rp150rb - 400rb'],
-  ['Ilustrasi Karakter Full', 'Karakter detail dengan pose dan warna lengkap', 'Rp350rb - 900rb'],
-  ['Paket Set Merch', '3-5 item satu tema: kaos, totebag, stiker, enamel pin', 'Rp700rb - 1,8jt'],
-  ['Chibi / Sticker Pack', '5-6 ekspresi karakter dalam gaya chibi', 'Rp150rb - 400rb'],
-  ['Mockup Tambahan', 'Per mockup, di luar mockup bawaan paket', 'Rp15rb - 40rb']
-];
-const RT = [
-  ['Revisi:', '2 kali gratis, berikutnya Rp25rb - 75rb (sekitar 10-15% dari harga)'],
-  ['File mentah (AI/PSD):', 'tambah 20-30%'],
-  ['Lisensi komersial / produksi massal:', 'tambah 30-100%'],
-  ['Deadline kilat (di bawah 3 hari):', 'tambah 25-50%'],
-  ['DP 50% di awal,', 'pelunasan sebelum file final dikirim']
-];
-$('#rcList').innerHTML = RC.map((r) => '<li><div><b>' + esc(r[0]) + '</b><small>' + esc(r[1]) + '</small></div><em>' + esc(r[2]) + '</em></li>').join('');
-$('#rcTerms').innerHTML = RT.map((r) => '<li><b>' + esc(r[0]) + '</b> ' + esc(r[1]) + '</li>').join('');
 
 /* projects */
 const P = [
