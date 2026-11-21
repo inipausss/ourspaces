@@ -260,6 +260,16 @@ footer{background:var(--dark);color:var(--cream);border-top:1px solid rgba(244,2
 footer .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 24px;padding-top:24px;padding-bottom:24px;font-weight:600;font-size:13px}
 #totop{position:fixed;right:calc(20px + env(safe-area-inset-right,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:60;view-transition-name:totop;width:52px;height:52px;border-radius:50%;border:3px solid var(--ink);background:var(--yellow);color:var(--ink);font-size:24px;font-weight:800;cursor:pointer;box-shadow:0 5px 0 rgba(0,0,0,.25);opacity:0;visibility:hidden;transform:translateY(16px);transition:all .3s ease}
 #totop.show{opacity:1;visibility:visible;transform:none}
+/* background music button: bars dance while playing, sit flat when off */
+#bgmBtn{position:fixed;left:calc(20px + env(safe-area-inset-left,0px));bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:60;width:52px;height:52px;border-radius:50%;border:3px solid var(--ink);background:var(--yellow);color:var(--ink);display:flex;align-items:center;justify-content:center;gap:3px;padding:0;box-shadow:0 5px 0 rgba(0,0,0,.25);transition:transform .2s var(--ease),background .2s}
+#bgmBtn[hidden]{display:none}
+#bgmBtn:hover{transform:translateY(-3px)}
+#bgmBtn[aria-pressed=false]{background:var(--paper)}
+#bgmBtn i{width:4px;height:18px;border-radius:2px;background:currentColor;transform:scaleY(.25)}
+#bgmBtn[aria-pressed=true] i{animation:eq .9s ease-in-out infinite}
+#bgmBtn[aria-pressed=true] i:nth-child(2){animation-delay:-.3s}
+#bgmBtn[aria-pressed=true] i:nth-child(3){animation-delay:-.6s}
+@keyframes eq{0%,100%{transform:scaleY(.25)}50%{transform:scaleY(1)}}
 
 /* reveal */
 .js .rv{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
@@ -545,6 +555,8 @@ footer{background:var(--cream);color:var(--ink);border-top:3px solid var(--ink)}
 
 <footer><div class="wrap"><span>&copy; 2026 Willi Prabowo Endi &middot; made in Yogyakarta</span><span class="foot-btns"><button class="btn btn-cream" id="motionBtn" type="button">Animation: on</button></span></div></footer>
 <button id="totop" type="button" aria-label="Back to top">&uarr;</button>
+<audio id="bgm" src="audio/bgm.mp3" loop preload="metadata"></audio>
+<button id="bgmBtn" type="button" aria-pressed="false" aria-label="Music: off" title="Music: off" hidden><i></i><i></i><i></i></button>
 <div id="lightbox" hidden role="dialog" aria-label="Image preview"><button class="btn btn-yellow" type="button" id="lbClose">Close</button><img alt="" id="lbImg"></div>
 <div id="toolsModal" hidden role="dialog" aria-labelledby="tmTitle"><div class="tm-box"><h3 id="tmTitle"></h3><button class="tm-x" type="button" data-tx aria-label="Close">&times;</button><div class="tm-grid" id="tmGrid"></div><p class="tm-hint" id="tmHint" aria-live="polite"></p></div></div>
 
@@ -747,6 +759,28 @@ const io = 'IntersectionObserver' in window ? new IntersectionObserver((es) => e
 document.querySelectorAll('.rv').forEach((el) => {
   if (io) io.observe(el); else { el.classList.add('in', 'done'); el.querySelectorAll('[data-count]').forEach(count); }
 });
+
+/* background music: browsers block autoplay with sound, so it starts on the first tap/click/key; the button toggles it.
+   The button only shows once audio/bgm.mp3 actually loads. */
+(function () {
+  const a = $('#bgm'), btn = $('#bgmBtn'), VOL = 0.35; let want = true, playing = false, fade;
+  try { want = localStorage.getItem('bgm') !== 'off'; } catch (e) {}
+  a.volume = 0;
+  const ramp = (to) => { clearInterval(fade); fade = setInterval(() => { const d = to - a.volume; if (Math.abs(d) < 0.03) { a.volume = to; clearInterval(fade); if (!to) a.pause(); } else a.volume = Math.min(1, Math.max(0, a.volume + Math.sign(d) * 0.03)); }, 60); };
+  const label = (on) => { playing = on; btn.setAttribute('aria-pressed', on); btn.title = 'Music: ' + (on ? 'on' : 'off'); btn.setAttribute('aria-label', btn.title); };
+  const GE = ['pointerdown', 'keydown', 'touchend'];
+  const unhook = () => GE.forEach((ev) => removeEventListener(ev, first));
+  const start = () => a.play().then(() => { label(true); ramp(VOL); unhook(); }).catch(() => {});
+  function first(e) { if (e.target.closest && e.target.closest('#bgmBtn')) { unhook(); return; } if (want) start(); }
+  GE.forEach((ev) => addEventListener(ev, first, { passive: true }));
+  btn.onclick = () => {
+    want = !playing; try { localStorage.setItem('bgm', want ? 'on' : 'off'); } catch (e) {}
+    if (want) start(); else { label(false); ramp(0); }
+  };
+  const show = () => { btn.hidden = false; if (want) start(); };
+  if (a.readyState >= 1) show(); else a.addEventListener('loadedmetadata', show, { once: true });
+  document.addEventListener('visibilitychange', () => { if (document.hidden) a.pause(); else if (playing) a.play().catch(() => {}); });
+})();
 
 /* parallax ornaments + torn-edge dividers */
 (function () {
