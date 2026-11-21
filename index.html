@@ -128,6 +128,13 @@ button.chip[aria-pressed="true"]{background:var(--ink);color:var(--yellow)}
 .orn{position:absolute;opacity:.16;will-change:translate}
 .orn svg{display:block;width:100%;height:100%;fill:currentColor}
 .orn.ring svg{fill:none;stroke:currentColor;stroke-width:6}
+/* idle motion on top of the scroll parallax (which uses the separate `translate` property) */
+.orn{animation:ornBob var(--d,6s) ease-in-out var(--dl,0s) infinite}
+.orn.spark{animation-name:ornTwinkle}
+.orn.ring{animation-name:ornDrift}
+@keyframes ornTwinkle{0%,100%{transform:rotate(0) scale(.8);opacity:.1}50%{transform:rotate(90deg) scale(1.35);opacity:.38}}
+@keyframes ornDrift{0%,100%{transform:translate(0,0) rotate(0)}50%{transform:translate(10px,-16px) rotate(25deg)}}
+@keyframes ornBob{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-14px) scale(1.25);opacity:.3}}
 .star[data-p]{will-change:translate}
 /* section divider: torn paper edge in the next band's colour, stitched cut line draws in on scroll */
 .tear{position:absolute;left:0;right:0;top:-17px;height:18px;pointer-events:none;z-index:3}
@@ -757,9 +764,10 @@ document.querySelectorAll('.rv').forEach((el) => {
   const par = [...document.querySelectorAll('.star[data-p]')].map((el) => ({ el, band: el.closest('.hero-band'), p: Number(el.dataset.p) }));
   document.querySelectorAll('.band').forEach((b, i) => {
     const box = document.createElement('div'); box.className = 'orns'; box.setAttribute('aria-hidden', 'true');
-    SET[i % SET.length].forEach(([s, l, t, z, p]) => {
+    SET[i % SET.length].forEach(([s, l, t, z, p], j) => {
+      const k = i * 3 + j;
       const o = document.createElement('i'); o.className = 'orn ' + s; o.innerHTML = SH[s];
-      o.style.cssText = 'left:' + l + '%;top:' + t + '%;width:' + z + 'px;height:' + z + 'px'; box.appendChild(o); par.push({ el: o, band: b, p });
+      o.style.cssText = 'left:' + l + '%;top:' + t + '%;width:' + z + 'px;height:' + z + 'px;--d:' + (3.4 + (k % 4) * 1.1).toFixed(1) + 's;--dl:-' + (k * 0.9).toFixed(1) + 's'; box.appendChild(o); par.push({ el: o, band: b, p });
     });
     b.prepend(box);
   });
