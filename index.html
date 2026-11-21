@@ -16,6 +16,12 @@
 *{box-sizing:border-box}
 html{scroll-padding-top:84px;scroll-behavior:smooth;overflow-x:clip}
 body{margin:0;font-family:var(--body);color:var(--ink);background:var(--teal)}
+/* pointer ala macOS, warna ikut tema: ink = biasa, merah = bisa diklik */
+@media (pointer:fine){
+html,html *{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='28' viewBox='0 0 24 28'%3E%3Cpath d='M5 2.5v20.5l5-4.7 3.4 7.6 3.5-1.6-3.4-7.4h7.3z' fill='%23F6EEDB' stroke='%23F6EEDB' stroke-width='3.2' stroke-linejoin='round'/%3E%3Cpath d='M5 2.5v20.5l5-4.7 3.4 7.6 3.5-1.6-3.4-7.4h7.3z' fill='%23211d1a'/%3E%3C/svg%3E") 5 3,default!important}
+.btn,.chip,.folder,.tool,.cert-card,.card-btn,.shot,.arrow,.filter,.type,.ch,.tm-x,.rm,#totop,a,button,summary,select,[role=button],[data-g],.btn *,.chip *,.folder *,.tool *,.cert-card *,.card-btn *,.shot *,.arrow *,.filter *,.type *,.ch *,.tm-x *,.rm *,#totop *,a *,button *,summary *,select *,[role=button] *,[data-g] *{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='28' viewBox='0 0 24 28'%3E%3Cpath d='M5 2.5v20.5l5-4.7 3.4 7.6 3.5-1.6-3.4-7.4h7.3z' fill='%23F6EEDB' stroke='%23F6EEDB' stroke-width='3.2' stroke-linejoin='round'/%3E%3Cpath d='M5 2.5v20.5l5-4.7 3.4 7.6 3.5-1.6-3.4-7.4h7.3z' fill='%23D7381F'/%3E%3C/svg%3E") 5 3,pointer!important}
+html input,html textarea{cursor:text!important}
+}
 a{color:inherit}
 main{overflow-x:clip}
 img{max-width:100%}
