@@ -359,13 +359,16 @@ footer{background:var(--cream);color:var(--ink);border-top:3px solid var(--ink)}
 /* the two characters peek in from the page edges beside the form; only shown where the side margins are wide enough */
 .sides{position:absolute;inset:0;z-index:-1;display:none;justify-content:space-between;align-items:center;overflow:hidden;pointer-events:none}
 @media (min-width:1240px){.sides{display:flex}}
-.fig{display:block;width:min(230px,calc((100vw - 1100px)/2))}
+/* each figure is drawn 40px wider than what shows and pushed 40px past the page edge, so the sway never opens a gap at the edge */
+.fig{display:block;width:calc(min(290px,(100vw - 1100px)/2) + 40px)}
+.fig-l{margin-left:-40px}
+.fig-r{margin-right:-40px}
 .fig img{display:block;width:100%;height:auto;filter:drop-shadow(0 6px 0 rgba(0,0,0,.18));transform-origin:0 100%;animation:sway 5s ease-in-out infinite}
 .fig-r img{transform-origin:100% 100%;animation-name:swayR;animation-delay:-2.5s}
 .rv.in:not(.done)~.sides .fig-l{animation:peekL .9s var(--ease) .4s backwards}
 .rv.in:not(.done)~.sides .fig-r{animation:peekR .9s var(--ease) .6s backwards}
-@keyframes sway{50%{transform:rotate(2.2deg) translateY(-8px)}}
-@keyframes swayR{50%{transform:rotate(-2.2deg) translateY(-8px)}}
+@keyframes sway{50%{transform:rotate(1.6deg) translateY(-8px)}}
+@keyframes swayR{50%{transform:rotate(-1.6deg) translateY(-8px)}}
 @keyframes peekL{from{transform:translateX(-75%)}}
 @keyframes peekR{from{transform:translateX(75%)}}
 .direct h3{margin:0 0 2px;font-family:var(--display);font-weight:400;font-size:30px;color:var(--cream)}
