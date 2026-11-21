@@ -117,7 +117,20 @@ button.chip[aria-pressed="true"]{background:var(--ink);color:var(--yellow)}
 .b-red{background:var(--red);color:var(--white)}
 .b-cream{background:var(--paper);color:var(--ink)}
 .b-teal{background:var(--teal-dark);color:var(--white);background-image:radial-gradient(rgba(255,255,255,.14) 1.5px,transparent 1.5px);background-size:46px 46px}
-.band+.band::before{content:"";position:absolute;left:0;right:0;top:-1px;height:14px;background:repeating-linear-gradient(90deg,rgba(0,0,0,.14) 0 22px,transparent 22px 44px);pointer-events:none}
+.band{isolation:isolate}
+.b-yellow{--bg:var(--yellow)}.b-red{--bg:var(--red)}.b-cream{--bg:var(--paper)}.b-teal{--bg:var(--teal-dark)}.b-mat{--bg:var(--teal)}
+/* parallax ornaments: sit behind content, drift at their own speed while scrolling */
+.orns{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:-1}
+.orn{position:absolute;opacity:.16;will-change:translate}
+.orn svg{display:block;width:100%;height:100%;fill:currentColor}
+.orn.ring svg{fill:none;stroke:currentColor;stroke-width:6}
+.star[data-p]{will-change:translate}
+/* section divider: torn paper edge in the next band's colour, stitched cut line draws in on scroll */
+.tear{position:absolute;left:0;right:0;top:-17px;height:18px;pointer-events:none;z-index:3}
+.tear svg{display:block;width:100%;height:100%;overflow:visible}
+.tear .fill{fill:var(--bg)}
+.tear .edge{fill:none;stroke:var(--ink);stroke-opacity:.55;stroke-width:2;stroke-dasharray:7 6;stroke-linejoin:round;vector-effect:non-scaling-stroke;clip-path:inset(-4px 100% -4px 0);transition:clip-path 1.3s var(--ease)}
+.tear.in .edge{clip-path:inset(-4px -4px -4px 0)}
 
 /* about */
 .about-grid{display:flex;flex-wrap:wrap;align-items:center;gap:56px}
@@ -382,8 +395,8 @@ footer{background:var(--cream);color:var(--ink);border-top:3px solid var(--ink)}
 <!-- HERO -->
 <div class="hero-band">
   <svg class="bigstar" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,2 61,36 98,36 68,57 79,92 50,71 21,92 32,57 2,36 39,36"/></svg>
-  <svg class="star s1" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,2 61,36 98,36 68,57 79,92 50,71 21,92 32,57 2,36 39,36"/></svg>
-  <svg class="star s2" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,2 61,36 98,36 68,57 79,92 50,71 21,92 32,57 2,36 39,36"/></svg>
+  <svg class="star s1" data-p="-0.18" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,2 61,36 98,36 68,57 79,92 50,71 21,92 32,57 2,36 39,36"/></svg>
+  <svg class="star s2" data-p="0.14" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,2 61,36 98,36 68,57 79,92 50,71 21,92 32,57 2,36 39,36"/></svg>
   <div class="wrap hero">
     <div class="hero-text">
       <span class="badge"><i></i>Available for work</span>
@@ -723,6 +736,55 @@ const io = 'IntersectionObserver' in window ? new IntersectionObserver((es) => e
 document.querySelectorAll('.rv').forEach((el) => {
   if (io) io.observe(el); else { el.classList.add('in', 'done'); el.querySelectorAll('[data-count]').forEach(count); }
 });
+
+/* parallax ornaments + torn-edge dividers */
+(function () {
+  const SH = {
+    spark: '<svg viewBox="0 0 100 100"><path d="M50 0C54 30 70 46 100 50 70 54 54 70 50 100 46 70 30 54 0 50 30 46 46 30 50 0Z"/></svg>',
+    ring: '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="42"/></svg>',
+    dot: '<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"/></svg>'
+  };
+  // [shape, left %, top %, size px, speed]; speed < 0 drifts against the scroll, > 0 with it
+  const SET = [
+    [['spark', 6, 14, 46, -0.22], ['ring', 90, 58, 74, 0.16], ['dot', 52, 88, 16, -0.3]],
+    [['ring', 92, 12, 64, 0.2], ['spark', 4, 62, 40, -0.15], ['spark', 70, 90, 28, 0.28]],
+    [['spark', 90, 20, 50, -0.2], ['dot', 8, 40, 18, 0.25], ['ring', 12, 86, 58, -0.12]]
+  ];
+  const par = [...document.querySelectorAll('.star[data-p]')].map((el) => ({ el, band: el.closest('.hero-band'), p: Number(el.dataset.p) }));
+  document.querySelectorAll('.band').forEach((b, i) => {
+    const box = document.createElement('div'); box.className = 'orns'; box.setAttribute('aria-hidden', 'true');
+    SET[i % SET.length].forEach(([s, l, t, z, p]) => {
+      const o = document.createElement('i'); o.className = 'orn ' + s; o.innerHTML = SH[s];
+      o.style.cssText = 'left:' + l + '%;top:' + t + '%;width:' + z + 'px;height:' + z + 'px'; box.appendChild(o); par.push({ el: o, band: b, p });
+    });
+    b.prepend(box);
+  });
+  // torn edge between bands; same jagged line every load (seeded), so it never flickers
+  let seed = 7; const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+  const tears = [...document.querySelectorAll('.band+.band')].map((b) => {
+    const pts = []; for (let x = 0; x < 1200; x += 14 + Math.round(rnd() * 16)) pts.push(x + ',' + (3 + rnd() * 9).toFixed(1));
+    pts.push('1200,8');
+    const edge = 'M' + pts.join(' L');
+    b.insertAdjacentHTML('afterbegin', '<div class="tear" aria-hidden="true"><svg viewBox="0 0 1200 18" preserveAspectRatio="none"><path class="fill" d="' + edge + ' L1200,18 L0,18Z"/><path class="edge" d="' + edge + '"/></svg></div>');
+    return b.firstElementChild;
+  });
+  const tio = 'IntersectionObserver' in window ? new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); tio.unobserve(e.target); } }), { rootMargin: '0px 0px -12% 0px' }) : null;
+  tears.forEach((t) => (tio ? tio.observe(t) : t.classList.add('in')));
+
+  const mq = matchMedia('(prefers-reduced-motion: reduce)'); let queued = false, cleared = false;
+  function run() {
+    queued = false;
+    if (mq.matches || document.documentElement.dataset.motion === 'off') { if (!cleared) { par.forEach((x) => (x.el.style.translate = '')); cleared = true; } return; }
+    cleared = false; const vh = innerHeight;
+    par.forEach((x) => {
+      const r = x.band.getBoundingClientRect();
+      if (r.bottom < -250 || r.top > vh + 250) return;
+      x.el.style.translate = '0 ' + ((r.top + r.height / 2 - vh / 2) * -x.p).toFixed(1) + 'px';
+    });
+  }
+  const ask = () => { if (!queued) { queued = true; requestAnimationFrame(run); } };
+  addEventListener('scroll', ask, { passive: true }); addEventListener('resize', ask); run();
+})();
 
 /* nav: sliding indicator that follows the section in view */
 const links = [...document.querySelectorAll('.nav ul a')];
