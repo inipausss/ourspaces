@@ -240,6 +240,16 @@ footer .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:spac
 /* reveal */
 .js .rv{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
 .js .rv.in{opacity:1;transform:none}
+/* one-time section entrances; .done is added after they finish so re-renders and hovers don't replay them */
+.rv.in:not(.done) .folder{animation:folderIn .7s var(--ease) calc(var(--n,0)*120ms) backwards}
+.rv.in:not(.done) .cert-card{animation:certIn .7s var(--ease) calc(var(--n,0)*100ms) backwards}
+.rv.in:not(.done) .cert-card:nth-child(even){--sx:30px;--sr:7deg}
+.rv.in:not(.done) .card{animation:wipeIn .8s var(--ease) calc(var(--n,0)*140ms) backwards}
+@keyframes folderIn{from{opacity:0;transform:translateY(70px) rotate(-8deg) scale(.9)}60%{transform:translateY(-12px) rotate(2deg)}}
+@keyframes certIn{from{opacity:0;transform:translate(var(--sx,-30px),50px) rotate(var(--sr,-7deg)) scale(.88)}}
+@keyframes wipeIn{from{clip-path:inset(0 100% 0 0);transform:translateX(-26px)}to{clip-path:inset(-20px -20px -30px -20px)}}
+.folder .tab{transition:transform .3s var(--ease)}
+.folder:hover .tab{transform:translateY(-5px) rotate(-4deg)}
 
 /* smart-animate */
 ::view-transition-group(*){animation-duration:.5s;animation-timing-function:var(--ease)}
@@ -707,9 +717,11 @@ function count(el) {
 const io = 'IntersectionObserver' in window ? new IntersectionObserver((es) => es.forEach((en) => {
   if (!en.isIntersecting) return;
   en.target.classList.add('in'); en.target.querySelectorAll('[data-count]').forEach(count); io.unobserve(en.target);
+  en.target.querySelectorAll('.folders>*,.cert-grid>*,.grid>*').forEach((c, i) => c.style.setProperty('--n', i));
+  setTimeout(() => en.target.classList.add('done'), 2400);
 }), { threshold: .12 }) : null;
 document.querySelectorAll('.rv').forEach((el) => {
-  if (io) io.observe(el); else { el.classList.add('in'); el.querySelectorAll('[data-count]').forEach(count); }
+  if (io) io.observe(el); else { el.classList.add('in', 'done'); el.querySelectorAll('[data-count]').forEach(count); }
 });
 
 /* nav: sliding indicator that follows the section in view */
