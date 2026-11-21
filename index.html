@@ -355,14 +355,15 @@ footer{background:var(--cream);color:var(--ink);border-top:3px solid var(--ink)}
 .btn-ghost{background:transparent;border-color:var(--ink);color:var(--ink)}
 .btn-ghost:hover{background:var(--ink);color:var(--yellow)}
 .status{min-height:20px;margin:12px 0 0;font-weight:700;font-size:13px;color:var(--blue)}
-.direct{flex:1 1 min(300px,100%);align-self:stretch;display:flex;flex-direction:column;gap:14px}
-/* the two characters peek in from the column's edges, then sway toward each other */
-.duo{margin-top:auto;padding-top:28px;display:flex;justify-content:space-between;align-items:flex-end;overflow:hidden;pointer-events:none}
-.fig{display:block;width:52%}
+.direct{flex:1 1 min(300px,100%);display:flex;flex-direction:column;gap:14px}
+/* the two characters peek in from the page edges beside the form; only shown where the side margins are wide enough */
+.sides{position:absolute;inset:0;z-index:-1;display:none;justify-content:space-between;align-items:center;overflow:hidden;pointer-events:none}
+@media (min-width:1240px){.sides{display:flex}}
+.fig{display:block;width:min(230px,calc((100vw - 1100px)/2))}
 .fig img{display:block;width:100%;height:auto;filter:drop-shadow(0 6px 0 rgba(0,0,0,.18));transform-origin:0 100%;animation:sway 5s ease-in-out infinite}
 .fig-r img{transform-origin:100% 100%;animation-name:swayR;animation-delay:-2.5s}
-.rv.in:not(.done) .fig-l{animation:peekL .9s var(--ease) .4s backwards}
-.rv.in:not(.done) .fig-r{animation:peekR .9s var(--ease) .6s backwards}
+.rv.in:not(.done)~.sides .fig-l{animation:peekL .9s var(--ease) .4s backwards}
+.rv.in:not(.done)~.sides .fig-r{animation:peekR .9s var(--ease) .6s backwards}
 @keyframes sway{50%{transform:rotate(2.2deg) translateY(-8px)}}
 @keyframes swayR{50%{transform:rotate(-2.2deg) translateY(-8px)}}
 @keyframes peekL{from{transform:translateX(-75%)}}
@@ -548,10 +549,10 @@ footer{background:var(--cream);color:var(--ink);border-top:3px solid var(--ink)}
       <a class="ch ch-ig" href="https://www.instagram.com/inipausss/" target="_blank" rel="noopener"><b>IG</b><span><small>Instagram</small>@inipausss</span><i aria-hidden="true">&#8599;</i></a>
       <a class="ch ch-be" href="https://www.behance.net/hellowill" target="_blank" rel="noopener"><b>B&#275;</b><span><small>Behance</small>behance.net/hellowill</span><i aria-hidden="true">&#8599;</i></a>
       <a class="ch ch-in" href="https://www.linkedin.com/in/willi-prabowo-endi/" target="_blank" rel="noopener"><b>in</b><span><small>LinkedIn</small>Willi Prabowo Endi</span><i aria-hidden="true">&#8599;</i></a>
-      <div class="duo" aria-hidden="true"><span class="fig fig-l"><img src="img/anisah.webp" alt="" loading="lazy"></span><span class="fig fig-r"><img src="img/willi.webp" alt="" loading="lazy"></span></div>
     </aside>
   </div>
-</div></section>
+</div><div class="sides" aria-hidden="true"><span class="fig fig-l"><img src="img/anisah.webp" alt="" loading="lazy"></span><span class="fig fig-r"><img src="img/willi.webp" alt="" loading="lazy"></span></div>
+</section>
 </main>
 
 <footer><div class="wrap"><span>&copy; 2026 Willi Prabowo Endi &middot; made in Yogyakarta</span><span class="foot-btns"><button class="btn btn-cream" id="motionBtn" type="button">Animation: on</button></span></div></footer>
