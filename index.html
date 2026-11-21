@@ -166,7 +166,6 @@ button.chip[aria-pressed="true"]{background:var(--ink);color:var(--yellow)}
 .folder[aria-selected="true"]{transform:translateY(-12px)}
 .folder[aria-selected="true"] .body{outline:4px solid var(--yellow);outline-offset:3px}
 .f1 .tab,.f1 .body{background:var(--yellow)}.f2 .tab,.f2 .body{background:var(--cream)}.f3 .tab,.f3 .body{background:var(--ink);color:var(--yellow)}
-.f3 .tab{background:#000}
 
 /* skills: tools popup */
 #toolsModal{position:fixed;inset:0;z-index:90;background:rgba(10,30,28,.8);display:flex;align-items:center;justify-content:center;padding:20px}
@@ -272,8 +271,9 @@ footer .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:spac
 @keyframes folderIn{from{opacity:0;transform:translateY(70px) rotate(-8deg) scale(.9)}60%{transform:translateY(-12px) rotate(2deg)}}
 @keyframes certIn{from{opacity:0;transform:translate(var(--sx,-30px),50px) rotate(var(--sr,-7deg)) scale(.88)}}
 @keyframes wipeIn{from{clip-path:inset(0 100% 0 0);transform:translateX(-26px)}to{clip-path:inset(-20px -20px -30px -20px)}}
-.folder .tab{transition:transform .3s var(--ease)}
-.folder:hover .tab{transform:translateY(-5px) rotate(-4deg)}
+.folder .tab{z-index:1;transition:top .3s var(--ease),height .3s var(--ease)}
+/* open the folder by growing the tab upward; its bottom edge stays put, so there is never a gap */
+.folder:hover .tab,.folder[aria-selected="true"] .tab{top:-8px;height:34px}
 
 /* smart-animate */
 ::view-transition-group(*){animation-duration:.5s;animation-timing-function:var(--ease)}
